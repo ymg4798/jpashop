@@ -35,6 +35,7 @@ public class OrderApiController {
         for (Order order : all) {
             order.getMember().getName();
             order.getDelivery().getAddress();
+
             List<OrderItem> orderItems = order.getOrderItems();//강제 초기화 하이버 모듈 내에서 로딩을 했을때 프록시는 데이터를 안뿌려서 강제 초기화 하게되면 뿌리게 된다.
             orderItems.forEach(o -> o.getItem().getName());
         }
@@ -52,9 +53,9 @@ public class OrderApiController {
     @GetMapping("/api/v3/orders")
     public List<OrderDto> ordersV3() {
        List<Order> orders = orderRepository.findAllWithItem();
-        return orders.stream()
-                .map(o -> new OrderDto(o))
-                .collect(toList());
+       return orders.stream()
+               .map(o -> new OrderDto(o))
+               .collect(toList());
     }
 
     @GetMapping("/api/v3.1/orders")
